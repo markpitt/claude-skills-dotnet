@@ -687,7 +687,7 @@ public void SetupKeyBindings()
 
 ## Performance Considerations
 
-### Platform-Specific Optimizations
+### Platform-Specific Optimisations
 ```csharp
 public void OptimizeForPlatform()
 {
@@ -750,7 +750,7 @@ public class PlatformTests
 2. **Test on All Targets**: Regularly test on all supported platforms
 3. **Respect Platform Guidelines**: Follow native UX patterns
 4. **Handle Permissions**: Request permissions appropriately on mobile
-5. **Optimize for Each Platform**: Adapt UI complexity to device capabilities
+5. **Optimise for Each Platform**: Adapt UI complexity to device capabilities
 6. **Use Conditional Compilation**: When absolutely necessary with `#if` directives
 7. **Provide Fallbacks**: Gracefully handle missing features
 8. **Consider Screen Sizes**: Design responsive layouts that work on all devices

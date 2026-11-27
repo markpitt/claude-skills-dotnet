@@ -24,7 +24,7 @@ Use repository conventions if already established.
 
 ## Error Handling
 
-- Centralize exception-to-response mapping.
+- Centralise exception-to-response mapping.
 - Use Problem Details payloads for machine-readable errors.
 - Log exceptions once with context; avoid duplicate noisy logs.
 
@@ -62,5 +62,5 @@ Use repository conventions if already established.
 ## API Versioning and Compatibility
 
 - Version breaking changes intentionally.
-- Keep backward-compatible default behavior where feasible.
+- Keep backward-compatible default behaviour where feasible.
 - Add integration tests for old and new contract paths.

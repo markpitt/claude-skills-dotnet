@@ -78,7 +78,7 @@ OnAfterRender()
 ### Lifecycle Methods Detailed
 
 #### SetParametersAsync()
-- **When**: First method called, before initialization
+- **When**: First method called, before initialisation
 - **Purpose**: Set component parameters
 - **Usage**: Rarely overridden, use OnInitialized instead
 - **Code Example**:
@@ -132,7 +132,7 @@ protected override async Task OnParametersSetAsync()
 
 #### ShouldRender()
 - **When**: Before DOM rendering, decision point
-- **Purpose**: Optimize rendering by skipping unnecessary renders
+- **Purpose**: Optimise rendering by skipping unnecessary renders
 - **Returns**: true (render) or false (skip)
 - **Code Example**:
 ```csharp
@@ -143,14 +143,14 @@ protected override bool ShouldRender()
 }
 ```
 
-**Common Optimizations:**
+**Common Optimisations:**
 - Skip render if data unchanged
 - Prevent re-render from external events
 - Implement custom change detection
 
 #### OnAfterRender / OnAfterRenderAsync()
 - **When**: After component rendered to DOM
-- **Purpose**: Work with DOM, initialize JS libraries, final setup
+- **Purpose**: Work with DOM, initialise JS libraries, final setup
 - **Parameter**: `firstRender` - true only on first render
 - **Code Example**:
 ```csharp
@@ -488,7 +488,7 @@ RenderFragment enables flexible component composition.
 - Example: Create theme provider component instead of theme-aware base class
 
 ### Keep Components Simple
-- Minimize `@code` block logic
+- Minimise `@code` block logic
 - Move complex logic to services
 - Example: Validation logic → ValidationService, not in component
 
@@ -523,4 +523,4 @@ async ValueTask IAsyncDisposable.DisposeAsync()
 
 ---
 
-**Related Resources:** See [state-management-events.md](state-management-events.md) for event handling and state updates. See [performance-advanced.md](performance-advanced.md) for optimization techniques.
+**Related Resources:** See [state-management-events.md](state-management-events.md) for event handling and state updates. See [performance-advanced.md](performance-advanced.md) for optimisation techniques.

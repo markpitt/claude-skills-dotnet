@@ -677,7 +677,7 @@ var logLevel = builder.Configuration.GetSection("Logging:Serilog:MinimumLevel").
 
 1. Verify file is named correctly (case-sensitive on Linux)
 2. Check file is in project root
-3. Ensure project includes it: `<Content Include="appsettings.json" CopyToOutputDirectory="PreserveNewest" />`
+3. Make sure project includes it: `<Content Include="appsettings.json" CopyToOutputDirectory="PreserveNewest" />`
 4. Verify environment name matches filename
 
 ### Secrets Not Injected

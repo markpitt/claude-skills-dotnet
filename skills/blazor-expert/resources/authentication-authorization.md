@@ -87,7 +87,7 @@ public class CustomAuthStateProvider : AuthenticationStateProvider
 
 ## AuthorizeView Component
 
-AuthorizeView displays content conditionally based on authorization status.
+AuthorizeView displays content conditionally based on authorisation status.
 
 ### Basic Authorization Check
 
@@ -216,7 +216,7 @@ Apply `[Authorize]` to pages to require authentication.
 
 ## Authorization Policies
 
-Define fine-grained authorization policies.
+Define fine-grained authorisation policies.
 
 ### Setup Policies
 
@@ -513,8 +513,8 @@ private async Task LogoutAsync()
 ```
 
 ### Validate on Server
-- Never trust client-side authorization
-- Always validate authorization on backend API
+- Never trust client-side authorisation
+- Always validate authorisation on backend API
 - Check claims/roles on server methods
 
 ### Use ReturnUrl After Login

@@ -7,7 +7,7 @@ Advanced reactive patterns and animation techniques for creating responsive, dyn
 - [ReactiveUI Integration](#reactiveui-integration)
 - [Animations](#animations)
 - [Observable Patterns](#observable-patterns)
-- [Performance Optimization](#performance-optimization)
+- [Performance Optimisation](#performance-optimisation)
 - [Common Reactive Patterns](#common-reactive-patterns)
 - [Best Practices](#best-practices)
 
@@ -481,7 +481,7 @@ _clickCommand.Executed
     .Subscribe(group => HandleClickGroup(group));
 ```
 
-## Performance Optimization
+## Performance Optimisation
 
 ### Reactive Performance
 

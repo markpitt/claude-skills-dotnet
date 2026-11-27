@@ -76,7 +76,8 @@ Subscribe to our updates and follow us for the latest content!
 - [ ] Install Azure Functions Core Tools (v4+)
 - [ ] Install Azure Static Web Apps CLI
 - [ ] Create local test markdown files
-- [ ] Start Azure Storage Emulator or Azurite
+- [ ] Start Azurite
+- [ ] Create a file share in a development storage account (Azurite has no Azure Files support)
 
 ### Phase 2: Backend Testing
 
@@ -103,12 +104,12 @@ Validation:
 
 ### Phase 3: File Share Integration Testing
 
-1. Add sample markdown file to local file share emulator
+1. Add a sample markdown file to the development file share
 2. Verify filename matches format: `{slug}.md`
 3. Test GetBlogPosts endpoint
 4. Test GetBlogPost endpoint with slug
 
-Expected behavior:
+Expected behaviour:
 - [ ] GetBlogPosts returns array with 1+ posts
 - [ ] GetBlogPost returns full post data
 - [ ] Frontmatter YAML parsed correctly
@@ -179,7 +180,7 @@ Test on multiple screen sizes:
 
 **Solution:**
 1. Open Azure Storage Explorer
-2. Connect to local storage emulator
+2. Connect to the development storage account
 3. Navigate to file share → blog-posts folder
 4. Add test markdown file if missing
 5. Restart Azure Functions
@@ -303,9 +304,9 @@ tags:
 4. Review staticwebapp.config.json syntax
 
 **Solution:**
-1. Ensure all configuration variables set:
+1. Make sure all configuration variables set:
    - `BlogFileShareName`
-   - `AzureWebJobsStorage`
+   - `BlogStorageConnection`
 2. Verify connection string format
 3. Test Functions deployment separately
 4. Check SWA configuration for correct API location
@@ -331,7 +332,7 @@ readTimeMinutes: 1
 This is a test.
 ```
 
-### Comprehensive Post
+### Full Post
 ```markdown
 ---
 title: "Complete Blazor Blog Implementation"

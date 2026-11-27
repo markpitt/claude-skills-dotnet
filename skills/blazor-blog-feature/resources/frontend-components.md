@@ -242,7 +242,7 @@ Add blog link to your main navigation component:
 
 ## CSS Styling
 
-Create comprehensive styling for the blog feature:
+Create full styling for the blog feature:
 
 ```css
 /* wwwroot/css/blog.css */
@@ -559,7 +559,7 @@ Create comprehensive styling for the blog feature:
 - Empty state message
 - Click navigation to post detail
 - Metadata display (author, date, read time)
-- Tag display for categorization
+- Tag display for categorisation
 
 ### Post.razor (Blog Detail)
 - Featured image support
@@ -574,7 +574,7 @@ Create comprehensive styling for the blog feature:
 - Hover effects for interactivity
 - Code block styling for technical content
 - Print styles for blog archives
-- Accessibility-friendly color contrast
+- Accessibility-friendly colour contrast
 
 ## Component Communication Flow
 

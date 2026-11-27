@@ -8,7 +8,7 @@ Azure Static Web Apps provides built-in authentication with zero configuration r
 
 | Provider | Endpoint | Best For |
 |----------|----------|----------|
-| **Azure Active Directory** | `/.auth/login/aad` | Enterprise applications |
+| **Microsoft Entra ID** | `/.auth/login/aad` | Enterprise applications |
 | **GitHub** | `/.auth/login/github` | Developer-focused apps |
 | **Twitter** | `/.auth/login/twitter` | Social integration |
 | **Google** | `/.auth/login/google` | General consumer apps |
@@ -30,7 +30,7 @@ Azure Static Web Apps provides built-in authentication with zero configuration r
 ```html
 <!-- Login buttons -->
 <a href="/.auth/login/github">Login with GitHub</a>
-<a href="/.auth/login/aad">Login with Azure AD</a>
+<a href="/.auth/login/aad">Log in with Microsoft Entra ID</a>
 <a href="/.auth/login/twitter">Login with Twitter</a>
 
 <!-- Logout -->

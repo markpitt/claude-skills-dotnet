@@ -2,10 +2,10 @@
 
 # blazor-expert
 
-Blazor development expertise covering Blazor Server, WebAssembly, and Hybrid apps. Use when building Blazor components, implementing state management, handling routing, JavaScript interop, forms and validation, authentication, or optimising Blazor applications. Includes best practices, architecture patterns, and troubleshooting guidance.
+Guides Blazor development across Blazor Web Apps and their render modes (static SSR, Interactive Server, WebAssembly and Auto), standalone WebAssembly and Hybrid apps. Use when building Blazor components, choosing a render mode, implementing state management, handling routing, JavaScript interop, forms and validation, authentication, or speeding up a slow Blazor app. Do NOT use for a Blazor blog built on Azure Static Web Apps (use blazor-blog-feature), for Avalonia or MAUI UI without Blazor, or for general .NET questions with no Blazor component (use dotnet-guru).
 
 - **Entry point:** [SKILL.md](SKILL.md)
-- **Version:** 2.0
+- **Version:** 3.0.0
 - **Licence:** Apache-2.0, see [LICENSE](LICENSE)
 
 ## Install
@@ -34,4 +34,4 @@ Loaded on demand, not up front. SKILL.md routes to them.
 ## Part of a larger set
 
 One of the .NET skills (`claude-skills-dotnet`). See the [group's list](../../README.md),
-or every group in [claude-skills](https://github.com/markpitt/claude-skills).
+or every group in [claude-skills](https://markpitt.dev/claude-skills/).

@@ -4,7 +4,7 @@ Azure Test Plans provides test management, test execution, and quality tracking 
 
 ## Test Plans
 
-Manage test plan organization and structure.
+Manage test plan organisation and structure.
 
 ### List Test Plans
 ```http
@@ -48,7 +48,7 @@ Content-Type: application/json
 
 ## Test Suites
 
-Organize tests into logical suites within plans.
+Organise tests into logical suites within plans.
 
 ### List Test Suites
 ```http
@@ -290,7 +290,7 @@ Content-Type: application/json
 
 ## Query Test Results
 
-Analyze test execution history and trends.
+Analyse test execution history and trends.
 
 ### Get Test Summary
 ```http
@@ -312,8 +312,8 @@ GET /{organization}/{project}/_apis/test/ResultTrendService/QueryResultTrendForB
 ## Best Practices
 
 ### Test Planning
-1. Create comprehensive test plans before development
-2. Organize tests logically in suites
+1. Create full test plans before development
+2. Organise tests logically in suites
 3. Link tests to work items/requirements
 4. Define clear pass/fail criteria
 5. Document test steps explicitly
@@ -326,12 +326,12 @@ GET /{organization}/{project}/_apis/test/ResultTrendService/QueryResultTrendForB
 3. Include expected results for each step
 4. Test one thing per test case
 5. Avoid test interdependencies
-6. Use parameterized tests for variations
+6. Use parameterised tests for variations
 7. Link to requirements/user stories
 
 ### Test Execution
 1. Run tests on every build
-2. Prioritize critical path testing
+2. Prioritise critical path testing
 3. Use configurations for browsers/OS
 4. Capture failure details
 5. Include environment information

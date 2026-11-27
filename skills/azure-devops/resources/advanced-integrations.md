@@ -299,7 +299,7 @@ Content-Type: application/json
 
 ## Audit
 
-Query organization audit logs.
+Query organisation audit logs.
 
 ### Query Audit Log
 ```http
@@ -350,7 +350,7 @@ Formats: `json`, `csv`
 7. Document custom extensions
 
 ### Wiki Documentation
-1. Keep wiki synchronized with code
+1. Keep wiki synchronised with code
 2. Use clear page hierarchies
 3. Include examples in documentation
 4. Link to relevant resources
@@ -358,7 +358,7 @@ Formats: `json`, `csv`
 6. Archive outdated pages
 7. Use templates for consistency
 
-### Search Optimization
+### Search Optimisation
 1. Index code regularly
 2. Keep search indexes updated
 3. Use filters for better results

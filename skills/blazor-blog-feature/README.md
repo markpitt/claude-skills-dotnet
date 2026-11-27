@@ -2,10 +2,10 @@
 
 # blazor-blog-feature
 
-Adds a complete blog feature to an existing Blazor WebAssembly Static Web App with Azure Functions backend and Azure File Share for markdown storage. Use when implementing blog functionality in .NET Blazor WASM projects with Azure infrastructure. Includes post listing, detail pages, markdown rendering, Azure Storage integration.
+Adds a markdown blog to an existing Blazor WebAssembly app hosted on Azure Static Web Apps, with an Azure Functions (isolated worker) API that reads posts from an Azure File Share. Covers the shared models, YAML frontmatter parsing with YamlDotNet, Markdig rendering, the list and post pages, app settings, local development and testing. Use when asked to "add a blog to this Blazor site", "serve markdown posts from Azure storage" or "build a posts page and API for the Static Web App". Do NOT use for a Blazor Server or Blazor Web App with server rendering (use blazor-expert), for a static site generator, or for general Static Web Apps configuration (use azure-swa).
 
 - **Entry point:** [SKILL.md](SKILL.md)
-- **Version:** 2.0
+- **Version:** 3.0.0
 - **Licence:** Apache-2.0, see [LICENSE](LICENSE)
 
 ## Install
@@ -33,4 +33,4 @@ Loaded on demand, not up front. SKILL.md routes to them.
 ## Part of a larger set
 
 One of the .NET skills (`claude-skills-dotnet`). See the [group's list](../../README.md),
-or every group in [claude-skills](https://github.com/markpitt/claude-skills).
+or every group in [claude-skills](https://markpitt.dev/claude-skills/).

@@ -2,10 +2,10 @@
 
 # dotnet-aspire
 
-Adds .NET Aspire cloud-native orchestration to existing .NET solutions. Analyses solution structure to identify services (APIs, web apps, workers), creates AppHost and ServiceDefaults projects, configures service discovery, adds NuGet packages, and sets up distributed application orchestration. Use when adding Aspire to .NET solutions or creating new cloud-ready distributed applications.
+Adds Aspire (formerly .NET Aspire) orchestration to an existing .NET solution or starts a new one. Reads the solution to find APIs, web apps and workers, creates the AppHost and ServiceDefaults projects, models databases, caches and queues as resources, wires up service discovery and OpenTelemetry, and covers the dashboard, configuration and deployment to Azure Container Apps, Kubernetes or Docker Compose. Use when asked to "add Aspire to this solution", "orchestrate these services locally", "replace the dev docker-compose with Aspire" or "why can't the Aspire services find each other". Do NOT use for a single ASP.NET Core app with no other services or resources, for Kubernetes or Container Apps work with no Aspire in it, or for general .NET questions (use dotnet-guru).
 
 - **Entry point:** [SKILL.md](SKILL.md)
-- **Version:** 2.0
+- **Version:** 3.0.0
 - **Licence:** Apache-2.0, see [LICENSE](LICENSE)
 
 ## Install
@@ -34,4 +34,4 @@ Loaded on demand, not up front. SKILL.md routes to them.
 ## Part of a larger set
 
 One of the .NET skills (`claude-skills-dotnet`). See the [group's list](../../README.md),
-or every group in [claude-skills](https://github.com/markpitt/claude-skills).
+or every group in [claude-skills](https://markpitt.dev/claude-skills/).

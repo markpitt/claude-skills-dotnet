@@ -20,12 +20,12 @@ Use layered tests that are fast by default and realistic where needed.
 - Use `WebApplicationFactory` for ASP.NET Core.
 - Use ephemeral dependencies (e.g., Testcontainers) for DB/message broker realism.
 - Seed minimal test data per scenario.
-- Validate auth, error contracts, and serialization behavior.
+- Validate auth, error contracts, and serialisation behavior.
 
 ## Async and Cancellation Tests
 
 - Test cancellation propagation explicitly.
-- Test timeout behavior and retry boundaries.
+- Test timeout behaviour and retry boundaries.
 - Assert no deadlocks from sync-over-async patterns.
 
 ## Contract and Serialization Tests
@@ -43,5 +43,5 @@ Use layered tests that are fast by default and realistic where needed.
 ## Coverage and Quality
 
 - Coverage is a signal, not a goal by itself.
-- Prioritize behavior-critical branches and failure modes.
+- Prioritise behavior-critical branches and failure modes.
 - Keep flaky tests out of main pipeline.

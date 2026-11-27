@@ -260,7 +260,7 @@ export default {
 **No CORS needed!** Because the API is served on the same domain (`/api/*`), CORS is not required. This is one of SWA's key advantages.
 
 - Frontend and API share the same domain
-- Cookies work seamlessly
+- Cookies work smoothly
 - No preflight OPTIONS requests
 - Simpler authentication flow
 

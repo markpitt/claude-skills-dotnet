@@ -284,7 +284,7 @@ Always use async properly with EventCallback:
 **How it works:**
 - `@bind` = `@bind-value` + `@bind-value:event="onchange"`
 - Sets value property, listens to onchange event
-- Automatic two-way synchronization
+- Automatic two-way synchronisation
 
 ### Custom Events with @bind
 

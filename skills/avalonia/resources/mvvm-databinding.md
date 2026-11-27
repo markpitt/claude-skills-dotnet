@@ -630,4 +630,4 @@ public class DataViewModel : ReactiveObject
 7. **Use Design Data**: Populate design-time DataContext for XAML preview
 8. **Weak Event Binding**: Use weak event patterns to prevent memory leaks
 9. **Property Changed Notifications**: Always notify when properties change
-10. **Keep State Synchronized**: Ensure View and ViewModel stay in sync
+10. **Keep State Synchronized**: Make sure View and ViewModel stay in sync

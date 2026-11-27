@@ -274,7 +274,7 @@ Update `Program.cs` in the API project to register the blog service:
 // Program.cs additions
 builder.Services.AddSingleton<IBlogStorageService>(sp =>
 {
-    var connectionString = Environment.GetEnvironmentVariable("AzureWebJobsStorage");
+    var connectionString = Environment.GetEnvironmentVariable("BlogStorageConnection");
     var shareName = Environment.GetEnvironmentVariable("BlogFileShareName") ?? "blog-content";
     var logger = sp.GetRequiredService<ILogger<BlogStorageService>>();
     return new BlogStorageService(connectionString!, shareName, logger);

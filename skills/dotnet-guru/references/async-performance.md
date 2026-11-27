@@ -1,6 +1,6 @@
 # Async and Performance Reference
 
-Optimize for correctness first, then measurable performance.
+Optimise for correctness first, then measurable performance.
 
 ## Async Correctness
 
@@ -24,7 +24,7 @@ Optimize for correctness first, then measurable performance.
 
 ## Allocation Awareness
 
-- Optimize only hot paths proven by profiling.
+- Optimise only hot paths proven by profiling.
 - Reduce temporary allocations in loops and serializers.
 - Use pooling (`ArrayPool<T>`) for large transient buffers.
 - Consider `Span<T>`/`Memory<T>` where they clearly reduce copying.

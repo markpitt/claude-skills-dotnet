@@ -66,4 +66,4 @@ Use modern C# features that improve correctness, maintainability, and intent.
 
 - Breaking changes need explicit versioning strategy.
 - Avoid widening nullable contracts accidentally.
-- Keep serialization contracts explicit and test-backed.
+- Keep serialisation contracts explicit and test-backed.

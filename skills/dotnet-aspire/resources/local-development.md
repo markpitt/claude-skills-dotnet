@@ -111,7 +111,7 @@ Operational metrics:
 - Request rate
 - Error rate
 - Latency percentiles (p50, p95, p99)
-- Resource utilization
+- Resource utilisation
 - Custom application metrics
 
 ## Local Development Workflow
@@ -710,7 +710,7 @@ dotnet run --project MyApp.AppHost
 
 **Check service names match:**
 - AppHost: `AddProject<Projects.MyApi>("api")`
-- Service HttpClient: `new Uri("http://api")`
+- Service HttpClient: `new Uri("https+http://api")`
 
 **Verify health checks pass:**
 - Dashboard shows green indicators
@@ -744,7 +744,7 @@ docker volume rm postgres-data
 **Check for leaks:**
 1. Dashboard → Metrics tab
 2. Watch memory graph over time
-3. Should stabilize after initial spike
+3. Should stabilise after initial spike
 
 **Reduce memory if testing:**
 ```csharp

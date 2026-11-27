@@ -1,85 +1,79 @@
 ---
 name: azure-devops
-description: Works with the Azure DevOps REST API across all services including Boards (work items, queries, backlogs), Repos (Git, pull requests, commits), Pipelines (builds, releases, deployments), Test Plans, Artifacts, organisations, projects, security, extensions, and more. Use when implementing Azure DevOps integrations, automating DevOps workflows, or building applications that interact with Azure DevOps services.
+description: Works with the Azure DevOps REST API and the az devops CLI across Boards (work items, WIQL queries, sprints), Repos (Git, pull requests, branch policies), Pipelines (builds, releases, agents, variables), Test Plans, Artifacts feeds, and organisation security. Use when writing code or scripts that call Azure DevOps, automating work items or pull requests, debugging a 401, 403 or 429 from dev.azure.com, or when asked to "create a work item from this", "query open bugs in Azure DevOps" or "trigger the pipeline from a script". Do NOT use for writing pipeline YAML with no API involved, for GitHub Actions or the GitHub API (use github-api), or for Azure resource management through ARM or the Azure CLI outside the devops extension.
 license: Apache-2.0
 metadata:
-  version: "1.0"
+  version: "2.0.0"
   tags: "azure-devops, api, pipelines, boards, repos, automation"
 ---
 
-# Azure DevOps API Skill
+# Azure DevOps API
 
-## Security
+## Credentials
 
-**Never output, suggest, or generate code that embeds PAT values verbatim.** Always reference credentials via environment variables (e.g., `$AZURE_DEVOPS_PAT`) or a secrets manager such as Azure Key Vault. When generating scripts or curl examples, use placeholder variable references. Never literal token strings.
+Never write a PAT or token into code, a script or an example. Read it from an environment variable
+such as `$AZURE_DEVOPS_PAT`, or from a secrets manager. A token pasted into a reply ends up in shell
+history, logs and commits, and it grants whatever scopes it was issued with.
 
-## Overview
+## Basics
 
-Azure DevOps REST API enables programmatic access to work items, repositories, pipelines, test plans, artifacts, and more.
+Every call takes an `api-version`. Use `7.1` unless the endpoint is only in preview, in which case
+the version carries a suffix such as `7.1-preview.1` and can change without notice.
 
-**Base URL:** `https://dev.azure.com/{organization}/{project}/_apis/{area}/{resource}?api-version={version}`
+```
+https://dev.azure.com/{organization}/{project}/_apis/{area}/{resource}?api-version=7.1
+```
 
-- **API Version:** Required on all requests (recommended: `7.1`)
-- **Authentication:** PAT (most common), OAuth 2.0, or Azure AD
+Some services live on their own host:
 
-### API URL Patterns
+| Service | Host |
+|---|---|
+| Most services | `dev.azure.com/{organization}` |
+| Classic releases | `vsrm.dev.azure.com/{organization}` |
+| Package feeds | `feeds.dev.azure.com/{organization}` |
+| Users, groups, identities | `vssps.dev.azure.com/{organization}` |
+| Analytics (OData) | `analytics.dev.azure.com/{organization}` |
 
-| Service | Base URL |
-|---------|----------|
-| Core services | `https://dev.azure.com/{organization}/` |
-| Release Management | `https://vsrm.dev.azure.com/{organization}/` |
-| Package Management | `https://feeds.dev.azure.com/{organization}/` |
-| Identity/Graph | `https://vssps.dev.azure.com/{organization}/` |
-| Analytics | `https://analytics.dev.azure.com/{organization}/` |
+A `404` from the right path on the wrong host is a common first failure.
 
-### Authentication
+## Authentication
 
-PAT authentication. Always read the token from an environment variable:
+Microsoft now steers new integrations to Microsoft Entra ID tokens: a managed identity or service
+principal for automation, and OAuth through Entra for apps acting as a user. PATs still work and are
+the quickest route for a personal script. Issue them with the narrowest scopes and a short expiry.
 
-```http
-GET https://dev.azure.com/{organization}/_apis/projects?api-version=7.1
-Authorization: Basic {base64(":{PAT}")}
-Content-Type: application/json
-```plaintext
+A PAT goes in Basic auth with an empty user name:
 
-## Service Area Routing
+```bash
+curl -u ":$AZURE_DEVOPS_PAT" \
+  "https://dev.azure.com/{organization}/_apis/projects?api-version=7.1"
+```
 
-Identify the service area for your task and read the corresponding resource file for detailed endpoints, request/response examples, and best practices.
+An Entra token goes in as a bearer token. In a pipeline, `$(System.AccessToken)` is already one,
+scoped to the build identity.
 
-| Task | Service Area | Resource File |
-|------|-------------|---------------|
-| Work items, bugs, queries, boards, sprints, WIQL | Boards | `resources/boards-work-tracking.md` |
-| Git repos, commits, branches, pull requests, policies | Repos | `resources/repos-version-control.md` |
-| Build pipelines, releases, deployments, agents, variables | Pipelines | `resources/pipelines-cicd.md` |
-| Test plans, suites, cases, runs, results, configurations | Test Plans | `resources/test-plans-quality.md` |
-| Package feeds, NuGet/npm/PyPI/Maven, versions, permissions | Artifacts | `resources/artifacts-packages.md` |
-| Projects, teams, users, groups, ACLs, security namespaces | Org & Security | `resources/organization-security.md` |
-| Webhooks, extensions, wiki, search, dashboards, audit | Integrations | `resources/advanced-integrations.md` |
+## Which reference to load
 
-### How to Use This Skill
+| Task | Reference |
+|---|---|
+| Work items, WIQL, boards, sprints, backlogs | `resources/boards-work-tracking.md` |
+| Git repos, commits, branches, pull requests, policies | `resources/repos-version-control.md` |
+| Builds, releases, deployments, agents, variables | `resources/pipelines-cicd.md` |
+| Test plans, suites, cases, runs, results | `resources/test-plans-quality.md` |
+| Feeds for NuGet, npm, PyPI and Maven | `resources/artifacts-packages.md` |
+| Projects, teams, users, groups, ACLs, security namespaces | `resources/organization-security.md` |
+| Service hooks, extensions, wiki, search, audit | `resources/advanced-integrations.md` |
 
-1. **Identify** the service area from the routing table above
-2. **Read** the corresponding resource file for detailed API reference
-3. **Apply** the common patterns below (auth, pagination, JSON Patch)
-4. **Follow** the best practices and security guidelines
+## Patterns that recur
 
-## Common API Patterns
+**Paging.** Most list endpoints return a `continuationToken`, either in the body or in the
+`x-ms-continuationtoken` header. Pass it back as `continuationToken` until it stops appearing. A
+few older endpoints use `$top` and `$skip` instead. Code that reads only the first page looks
+correct on a small project and silently drops data on a big one.
 
-### Pagination
+**Work item updates use JSON Patch**, sent with `Content-Type: application/json-patch+json`.
+Sending plain JSON gets a `400`.
 
-Continuation token pattern:
-```json
-{
-  "count": 100,
-  "value": [],
-  "continuationToken": "MTIz"
-}
-```plaintext
-Pass `?continuationToken=MTIz` on the next request. Some endpoints use `$top` and `$skip` instead.
-
-### JSON Patch (RFC 6902)
-
-Used for work item updates and some other resources:
 ```json
 [
   {"op": "add", "path": "/fields/System.Title", "value": "New title"},
@@ -89,131 +83,58 @@ Used for work item updates and some other resources:
     "url": "https://dev.azure.com/{org}/_apis/wit/workItems/123"
   }}
 ]
-```plaintext
+```
 
-Operations: `add`, `remove`, `replace`, `test`, `copy`, `move`.
+**Queries use WIQL.** A WIQL query returns IDs only. Fetch the fields in a second call to
+`wit/workitemsbatch`, at most 200 IDs at a time.
 
-### Filtering
-
-OData-style filters on supported endpoints:
-```http
-GET /{endpoint}?$filter=state eq 'Active'&api-version=7.1
-```plaintext
-
-Work items use WIQL:
 ```sql
 SELECT [System.Id], [System.Title] FROM WorkItems
 WHERE [System.WorkItemType] = 'Bug' AND [System.State] = 'Active'
 ORDER BY [System.ChangedDate] DESC
-```plaintext
+```
 
-### Batch Operations
+## Rate limits
 
-```http
-GET /{organization}/_apis/wit/workitemsbatch?ids=1,2,3,4,5&api-version=7.1
-```plaintext
+Azure DevOps counts throughput units (TSTUs), not requests. Each call is weighted by what it
+costs the service, and a user or pipeline gets 200 TSTUs in a sliding five-minute window. Read
+`X-RateLimit-Remaining` and `X-RateLimit-Delay` on each response and slow down before you hit a
+`429`. When one arrives, wait for `Retry-After`. Batch endpoints and caching do more than any retry
+policy.
 
-## Error Handling
+## Errors
 
-Standard HTTP status codes: `200` OK, `201` Created, `204` No Content, `400` Bad Request, `401` Unauthorized, `403` Forbidden, `404` Not Found, `409` Conflict, `429` Rate Limited, `500`/`503` Server Error.
+The body usually carries a `TF` code and a `typeKey`, and they say more than the status code.
 
-Error response format:
 ```json
 {
   "message": "TF401019: The Git repository does not exist or you do not have permissions.",
-  "typeKey": "GitRepositoryNotFoundException",
-  "errorCode": 0
+  "typeKey": "GitRepositoryNotFoundException"
 }
-```plaintext
+```
 
-### Rate Limiting
+A `401` is a bad or expired credential. A `403`, or a `404` on something you know exists, is
+usually a missing PAT scope or project permission: Azure DevOps hides resources you cannot read.
 
-- Typically 200-300 requests per minute; varies by service
-- Implement exponential backoff; respect `Retry-After` header
-- Use batch operations and caching to reduce request volume
-
-## Permissions & Scopes
-
-### PAT Scopes (Least Privilege)
-
-Key scopes. Select only what's needed:
-
-| Scope | Access Levels |
-|-------|--------------|
-| Code | Full, Read, Status |
-| Build | Read & execute |
-| Release | Read, write, execute, manage |
-| Work Items | Full, Read, write |
-| Packaging | Read, write, manage |
-| Project and Team | Read, write, manage |
-| Test Management | Read & write |
-| Graph / Identity | Read |
-| Agent Pools | Read & manage |
-
-### OAuth 2.0 Scopes
-
-Format: `vso.{area}[_{permission}]`, e.g., `vso.work`, `vso.work_write`, `vso.code`, `vso.build_execute`.
-
-## API Versioning
-
-- `7.1`, Latest stable (recommended)
-- `7.0`, `6.0`, `5.1`, Older stable versions
-- `-preview` suffix (e.g., `7.1-preview.1`), Preview features, may change
-
-Always specify `api-version` on every request. Use stable versions for production.
-
-## Tools & SDKs
-
-### Azure DevOps CLI
+## CLI and SDKs
 
 ```bash
-pip install azure-devops
-az devops login --organization https://dev.azure.com/{organization}
+az extension add --name azure-devops
 az devops configure --defaults organization=https://dev.azure.com/{organization} project={project}
-```plaintext
+```
 
-### SDKs
+The CLI reads `AZURE_DEVOPS_EXT_PAT` for non-interactive use. `az devops invoke` calls any REST
+area the CLI has no command for.
 
 | Language | Package |
-|----------|---------|
+|---|---|
 | .NET | `Microsoft.TeamFoundationServer.Client` |
 | Node.js | `azure-devops-node-api` |
 | Python | `azure-devops` |
-| Java | Azure DevOps SDK for Java |
 
-### Testing Authentication
+## References
 
-```bash
-PAT_ENCODED=$(echo -n ":$AZURE_DEVOPS_PAT" | base64)
-curl -H "Authorization: Basic $PAT_ENCODED" \
-  "https://dev.azure.com/{organization}/_apis/projects?api-version=7.1"
-```plaintext
-
-**Preferred:** Use `az devops login` for secure credential storage.
-
-## Best Practices
-
-### Performance
-- Use batch operations for multiple items
-- Implement pagination with continuation tokens
-- Use `$select` for specific fields where supported
-- Cache responses; use delta queries for incremental sync
-
-### Security
-- Store PATs in Azure Key Vault or similar; never commit to source control
-- Use least-privilege scopes; rotate PATs regularly with expiration
-- Use HTTPS only; validate inputs to prevent injection
-- Use managed identities where possible
-
-### Integration Patterns
-- **Service Hooks:** Event-driven integrations (read `resources/advanced-integrations.md`)
-- **Polling:** Batch processing with reasonable intervals
-- **Scheduled Jobs:** Periodic sync operations
-
-## Reference Links
-
-- **REST API Docs:** <https://docs.microsoft.com/rest/api/azure/devops/?view=azure-devops-rest-7.1>
-- **Authentication Guide:** <https://docs.microsoft.com/azure/devops/integrate/get-started/authentication/authentication-guidance>
-- **Rate Limits:** <https://docs.microsoft.com/azure/devops/integrate/concepts/rate-limits>
-- **Azure DevOps CLI:** <https://docs.microsoft.com/cli/azure/devops>
-- **Status Page:** <https://status.dev.azure.com/>
+- REST API: <https://learn.microsoft.com/rest/api/azure/devops/>
+- Authentication guidance: <https://learn.microsoft.com/azure/devops/integrate/get-started/authentication/authentication-guidance>
+- Rate limits: <https://learn.microsoft.com/azure/devops/integrate/concepts/rate-limits>
+- CLI: <https://learn.microsoft.com/cli/azure/devops>

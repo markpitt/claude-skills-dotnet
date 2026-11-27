@@ -1,6 +1,6 @@
 # Azure Boards - Work Item Tracking
 
-Azure Boards provides comprehensive work item management including tasks, bugs, user stories, and custom work item types. This resource covers work items, queries, iterations, and area/iteration paths.
+Azure Boards provides full work item management including tasks, bugs, user stories, and custom work item types. This resource covers work items, queries, iterations, and area/iteration paths.
 
 ## Work Items - Core Operations
 
@@ -196,7 +196,7 @@ GET /{organization}/{project}/_apis/wit/fields/{fieldNameOrRefName}?api-version=
 
 ## Area & Iteration Paths
 
-Organize work using area and iteration hierarchies.
+Organise work using area and iteration hierarchies.
 
 ### Get Areas
 ```http
@@ -296,4 +296,4 @@ Work item updates use JSON Patch (RFC 6902) format:
 - Use consistent field naming
 - Document custom field purposes
 - Use standard system fields where applicable
-- Minimize custom field proliferation
+- Minimise custom field proliferation

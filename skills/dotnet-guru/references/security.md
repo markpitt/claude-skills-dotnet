@@ -16,27 +16,27 @@ Apply secure defaults and fail safely.
 
 ## Data Access Security
 
-- Parameterize SQL commands always.
+- Parameterise SQL commands always.
 - Avoid string interpolation in SQL/command text.
 - Restrict DB permissions to least privilege.
 
 ## Serialization Security
 
 - Prefer `System.Text.Json` defaults for modern safety and performance.
-- Avoid polymorphic deserialization of untrusted payloads unless strictly controlled.
-- Keep serialization options explicit for externally exposed contracts.
+- Avoid polymorphic deserialisation of untrusted payloads unless strictly controlled.
+- Keep serialisation options explicit for externally exposed contracts.
 
 ## AuthN/AuthZ
 
-- Enforce authentication and authorization at endpoint boundaries.
-- Use policy-based authorization for non-trivial rules.
+- Enforce authentication and authorisation at endpoint boundaries.
+- Use policy-based authorisation for non-trivial rules.
 - Avoid ad-hoc role checks scattered across handlers.
 
 ## HTTP Security
 
 - Enforce HTTPS and secure headers where applicable.
 - Set strict timeout budgets for outbound calls.
-- Validate TLS and certificate behavior in production environments.
+- Validate TLS and certificate behaviour in production environments.
 
 ## Logging and Privacy
 
@@ -47,11 +47,11 @@ Apply secure defaults and fail safely.
 ## Dependency and Supply Chain
 
 - Keep packages patched and monitor vulnerabilities.
-- Minimize dependencies in critical paths.
+- Minimise dependencies in critical paths.
 - Pin and review transitive dependencies for production services.
 
 ## Threat-Aware Practices
 
-- Treat deserialization, file parsing, and dynamic code paths as high-risk.
+- Treat deserialisation, file parsing, and dynamic code paths as high-risk.
 - Validate assumptions with security tests for critical endpoints.
 - Add rate-limiting, abuse detection, and circuit breakers for public APIs.

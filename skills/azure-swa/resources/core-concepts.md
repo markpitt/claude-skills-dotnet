@@ -27,7 +27,7 @@ Azure Static Web Apps is a service that automatically builds and deploys full-st
 - Same deployment pipeline as frontend
 
 ### 3. Authentication & Authorization
-- Pre-configured providers (Azure AD, GitHub, Twitter)
+- Pre-configured providers (Microsoft Entra ID, GitHub, Twitter)
 - Role-based access control (RBAC)
 - Custom roles via Azure Functions
 - User principal header in API calls
@@ -70,7 +70,7 @@ Azure Static Web Apps is a service that automatically builds and deploys full-st
 │  └─ Same deployment pipeline        │
 ├─────────────────────────────────────┤
 │  Authentication                     │
-│  ├─ Azure AD, GitHub, Twitter       │
+│  ├─ Entra ID, GitHub, Twitter       │
 │  └─ /.auth/* endpoints              │
 └─────────────────────────────────────┘
 ```
@@ -161,11 +161,11 @@ my-swa-project/
 - Protect sensitive routes
 - Manage secrets securely
 
-### Performance Optimization
-- Minimize bundle size
+### Performance Optimisation
+- Minimise bundle size
 - Enable code splitting
 - Configure cache headers
-- Optimize images
+- Optimise images
 - Monitor metrics
 
 ### Operational Excellence

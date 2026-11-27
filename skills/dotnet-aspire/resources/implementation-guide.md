@@ -1,4 +1,4 @@
-# .NET Aspire — Detailed Implementation Guide
+# .NET Aspire: Detailed Implementation Guide
 
 Step-by-step guide for adding .NET Aspire to an existing .NET solution.
 
@@ -43,7 +43,7 @@ dotnet new aspire-servicedefaults -n [SolutionName].ServiceDefaults
 The ServiceDefaults project:
 - Provides shared service configuration
 - Configures OpenTelemetry, health checks, and service discovery
-- Applied to all services for consistent behavior
+- Applied to all services for consistent behaviour
 
 **Add projects to solution:**
 ```bash
@@ -121,19 +121,19 @@ builder.Build().Run();
 ```
 
 **Common resource methods:**
-- `.AddRedis("name")` — Redis cache
-- `.AddPostgres("name").AddDatabase("dbname")` — PostgreSQL
-- `.AddSqlServer("name").AddDatabase("dbname")` — SQL Server
-- `.AddRabbitMQ("name")` — RabbitMQ messaging
-- `.AddMongoDB("name").AddDatabase("dbname")` — MongoDB
-- `.AddAzureStorage("name")` — Azure Storage
+- `.AddRedis("name")`: Redis cache
+- `.AddPostgres("name").AddDatabase("dbname")`: PostgreSQL
+- `.AddSqlServer("name").AddDatabase("dbname")`: SQL Server
+- `.AddRabbitMQ("name")`: RabbitMQ messaging
+- `.AddMongoDB("name").AddDatabase("dbname")`: MongoDB
+- `.AddAzureStorage("name")`: Azure Storage
 
 **Service configuration methods:**
-- `.WithReference(resource)` — Add dependency and inject connection info
-- `.WithExternalHttpEndpoints()` — Make service accessible externally
-- `.WithReplicas(count)` — Run multiple instances
-- `.WithEnvironment("KEY", "value")` — Add environment variables
-- `.WithHttpsEndpoint(port: 7001)` — Specify HTTPS port
+- `.WithReference(resource)`: Add dependency and inject connection info
+- `.WithExternalHttpEndpoints()`: Make service accessible externally
+- `.WithReplicas(count)`: Run multiple instances
+- `.WithEnvironment("KEY", "value")`: Add environment variables
+- `.WithHttpsEndpoint(port: 7001)`: Specify HTTPS port
 
 ## Step 4: Add Required NuGet Packages
 
@@ -178,7 +178,7 @@ builder.Services.AddHttpClient("apiservice", client =>
 ```csharp
 builder.Services.AddHttpClient("apiservice", client =>
 {
-    client.BaseAddress = new Uri("http://apiservice");
+    client.BaseAddress = new Uri("https+http://apiservice");
 });
 ```
 
@@ -188,7 +188,7 @@ The service name matches the name in AppHost's `AddProject<>()` call.
 ```csharp
 builder.Services.AddHttpClient<IApiClient, ApiClient>(client =>
 {
-    client.BaseAddress = new Uri("http://apiservice");
+    client.BaseAddress = new Uri("https+http://apiservice");
 });
 ```
 
@@ -272,12 +272,12 @@ var customResource = builder.AddResource(new CustomResource("name"))
 
 When adding Aspire to an existing solution, expect to modify:
 
-1. **Solution file (.sln)** — Add AppHost and ServiceDefaults projects
-2. **Each service's Program.cs** — Add service defaults registration
-3. **Each service's .csproj** — Add ServiceDefaults reference
-4. **AppHost/Program.cs** — Define orchestration and resources
-5. **Service configuration** — Replace hardcoded URLs with service discovery
-6. **Database configuration** — Use Aspire component methods
+1. **Solution file (.sln)**: Add AppHost and ServiceDefaults projects
+2. **Each service's Program.cs**: Add service defaults registration
+3. **Each service's .csproj**: Add ServiceDefaults reference
+4. **AppHost/Program.cs**: Define orchestration and resources
+5. **Service configuration**: Replace hardcoded URLs with service discovery
+6. **Database configuration**: Use Aspire component methods
 
 ## Example Solution Structure
 

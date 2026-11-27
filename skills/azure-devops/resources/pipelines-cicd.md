@@ -507,7 +507,7 @@ Common endpoint types:
 3. Cache dependencies
 4. Parallelize builds
 5. Clean up old build artifacts
-6. Monitor agent pool utilization
+6. Monitor agent pool utilisation
 7. Use demand-based agent scaling
 
 ### Monitoring & Troubleshooting

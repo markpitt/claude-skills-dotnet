@@ -40,7 +40,7 @@ Reject these patterns unless there is a documented, exceptional reason.
 
 - Hardcoded secrets and credentials.
 - String-concatenated SQL.
-- Unsafe deserialization of untrusted data.
+- Unsafe deserialisation of untrusted data.
 - Logging sensitive PII/tokens.
 
 ## Testing

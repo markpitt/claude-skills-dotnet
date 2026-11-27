@@ -374,7 +374,7 @@ await smtpClient.SendAsync(message);
 
 ### Identity and Authentication
 
-#### Azure Active Directory
+#### Microsoft Entra ID
 **Client Package:** `Aspire.Azure.Identity`
 
 **Service Configuration:**

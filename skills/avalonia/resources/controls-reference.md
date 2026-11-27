@@ -1,6 +1,6 @@
 # Avalonia Controls Reference
 
-Comprehensive reference for all major Avalonia UI controls.
+Full reference for all major Avalonia UI controls.
 
 ## Contents
 

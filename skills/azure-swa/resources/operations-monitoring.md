@@ -163,7 +163,7 @@ module.exports = async function (context, req) {
 - **Response time** - Performance
 - **Error rate** - Application health
 - **Function execution time** - API performance
-- **Bandwidth** - Cost optimization
+- **Bandwidth** - Cost optimisation
 - **Cache hit rate** - CDN effectiveness
 
 ## Troubleshooting
@@ -193,7 +193,7 @@ module.exports = async function (context, req) {
 - Check `function.json` bindings
 - Review API logs in Azure Portal
 - Test locally with SWA CLI
-- Ensure API folder structure is correct
+- Make sure API folder structure is correct
 
 **Debug command:**
 
@@ -236,7 +236,7 @@ ls -la build/
 ### Problem: Environment variables not available
 
 **Solutions:**
-- Ensure variables are set in Azure
+- Make sure variables are set in Azure
 - Check naming (no `REACT_APP_` prefix in Functions)
 - Restart deployment after adding variables
 - Verify `local.settings.json` for local dev
@@ -256,7 +256,7 @@ console.log('All env vars:', Object.keys(process.env));
 **Solutions:**
 - Verify DNS propagation (can take 24-48 hours)
 - Check CNAME/ALIAS record configuration
-- Ensure TXT record for validation
+- Make sure TXT record for validation
 - Review SSL certificate status
 
 **Check DNS:**
@@ -272,10 +272,10 @@ nslookup <app-name>.azurestaticapps.net
 ### Problem: High latency or slow performance
 
 **Solutions:**
-- Analyze Application Insights
+- Analyse Application Insights
 - Check bundle size
 - Enable code splitting
-- Optimize images
+- Optimise images
 - Review API function performance
 
 ### Problem: "DeploymentFailed" error
@@ -284,7 +284,7 @@ nslookup <app-name>.azurestaticapps.net
 - Check artifact size (must be < 100 MB)
 - Verify all dependencies are available
 - Review build logs for errors
-- Ensure node_modules not included in output
+- Make sure node_modules not included in output
 
 ## Debugging
 
@@ -336,9 +336,9 @@ module.exports = async function (context, req) {
 };
 ```
 
-## Performance Optimization
+## Performance Optimisation
 
-### Frontend Optimization
+### Frontend Optimisation
 
 ```javascript
 // Code splitting in React
@@ -350,7 +350,7 @@ const MyComponent = React.lazy(() => import('./MyComponent'));
 // Tree shake unused code
 ```
 
-### API Optimization
+### API Optimisation
 
 ```javascript
 // Add caching header
@@ -365,7 +365,7 @@ module.exports = async function (context, req) {
 };
 ```
 
-### Configuration Optimization
+### Configuration Optimisation
 
 ```json
 {

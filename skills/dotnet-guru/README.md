@@ -5,7 +5,7 @@
 Enforces current C# and .NET 10 best practices when writing, reviewing, or refactoring .NET code. Use when the user asks for C#/.NET help, ASP.NET Core APIs, Entity Framework Core, performance tuning, testing, security hardening, or project setup. Covers analyzers and SDK tooling, nullable/reference safety, async and allocation-aware patterns, DI/options correctness, observability, and anti-pattern elimination. Do NOT use for non-.NET languages or generic architecture discussions without concrete .NET implementation details.
 
 - **Entry point:** [SKILL.md](SKILL.md)
-- **Version:** 1.0.0
+- **Version:** 1.1.0
 - **Licence:** Apache-2.0, see [LICENSE](LICENSE)
 
 ## Install
@@ -37,4 +37,4 @@ Loaded on demand, not up front. SKILL.md routes to them.
 ## Part of a larger set
 
 One of the .NET skills (`claude-skills-dotnet`). See the [group's list](../../README.md),
-or every group in [claude-skills](https://github.com/markpitt/claude-skills).
+or every group in [claude-skills](https://markpitt.dev/claude-skills/).

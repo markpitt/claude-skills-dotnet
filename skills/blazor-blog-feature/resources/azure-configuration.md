@@ -10,13 +10,16 @@ Create or update `local.settings.json` in your API project:
   "Values": {
     "AzureWebJobsStorage": "UseDevelopmentStorage=true",
     "FUNCTIONS_WORKER_RUNTIME": "dotnet-isolated",
+    "BlogStorageConnection": "<connection string of a development storage account>",
     "BlogFileShareName": "blog-content"
   }
 }
 ```
 
 **Configuration Properties:**
-- `AzureWebJobsStorage`: Connection string for storage (development uses emulator)
+- `AzureWebJobsStorage`: storage for the Functions host itself. Azurite covers this locally.
+- `BlogStorageConnection`: the storage account that holds the blog file share. Azurite does not
+  emulate Azure Files, so point this at a real storage account, ideally a separate development one.
 - `FUNCTIONS_WORKER_RUNTIME`: Must be "dotnet-isolated" for .NET 10
 - `BlogFileShareName`: Name of the file share containing blog posts
 
@@ -68,7 +71,7 @@ az staticwebapp appsettings set \
   --name your-app-name \
   --setting-names \
     BlogFileShareName=blog-content \
-    AzureWebJobsStorage="<your-connection-string>"
+    BlogStorageConnection="<your-connection-string>"
 ```
 
 Or via Azure Portal:
@@ -76,7 +79,7 @@ Or via Azure Portal:
 2. Add Application settings:
    - Name: `BlogFileShareName`
    - Value: `blog-content`
-   - Name: `AzureWebJobsStorage`
+   - Name: `BlogStorageConnection`
    - Value: `<your-connection-string>`
 
 ### staticwebapp.config.json
@@ -103,7 +106,7 @@ Optional: Add routing configuration for blog URLs:
 }
 ```
 
-This ensures:
+This makes sure:
 - Blog routes are handled by Blazor SPA (for client-side routing)
 - API routes are passed through to Azure Functions
 - Static assets are served correctly
@@ -112,8 +115,10 @@ This ensures:
 
 ### Prerequisites
 
-1. Install Azure Storage Emulator or use Azurite
-2. Start the emulator/Azurite
+1. Install and start Azurite for the Functions host storage (the retired Azure Storage Emulator is
+   not supported)
+2. Create a file share in a development storage account and put its connection string in
+   `BlogStorageConnection`. Azurite has no Azure Files support, so the share cannot be local.
 
 ### Running Locally
 
@@ -122,11 +127,15 @@ This ensures:
 cd src/YourProject.Api
 func start
 
-# Terminal 2: Start Blazor WASM with SWA CLI
-swa start http://localhost:3000 --api-location api
+# Terminal 2: Start the Blazor dev server, then put the SWA CLI in front of both
+cd src/YourProject.Client
+dotnet watch run
+swa start http://localhost:5000 --api-devserver-url http://localhost:7071
 ```
 
-Then navigate to: `http://localhost:3000/blog`
+Use the port the Blazor dev server prints in place of 5000. Then browse to
+`http://localhost:4280/blog`: that is the SWA CLI, which applies the routing rules. The dev server's
+own port skips them.
 
 ### Testing Endpoints
 
@@ -214,7 +223,7 @@ Before deploying to production:
 **Issue: 403 Forbidden accessing file share**
 - Verify connection string is correct
 - Check storage account firewall settings
-- Ensure managed identity has access (if using)
+- Make sure managed identity has access (if using)
 
 **Issue: Blog posts not loading (404)**
 - Verify file share and blog-posts directory exist
@@ -245,7 +254,7 @@ Use Azure Storage Explorer to:
 ### Authentication & Authorization
 - Blog endpoints are currently anonymous (AuthorizationLevel.Anonymous)
 - For admin functions (create/update posts), add higher auth level
-- Consider Azure AD for content management UI
+- Consider Microsoft Entra ID for content management UI
 
 ### Connection String Security
 - Never commit connection string to git
@@ -254,12 +263,12 @@ Use Azure Storage Explorer to:
 - Store locally in user secrets (dev)
 
 ### Content Security
-- Sanitize user-generated content if accepting comments
+- Sanitise user-generated content if accepting comments
 - Validate image uploads if adding image management
 - Implement rate limiting on API endpoints
 - Use Content Security Policy headers
 
-## Performance Optimization
+## Performance Optimisation
 
 ### Caching Strategy
 
@@ -273,12 +282,12 @@ Use Azure Storage Explorer to:
 - Consider Redis cache layer for frequent posts
 - Cache file share directory listing
 
-### CDN Optimization
+### CDN Optimisation
 
 1. Use Azure CDN for static assets (images, CSS, JS)
 2. Set appropriate cache headers
 3. Enable gzip compression
-4. Optimize featured image sizes
+4. Optimise featured image sizes
 
 ## Scaling Considerations
 

@@ -43,7 +43,7 @@ Prefer predictable query shapes, explicit loading, and measurable performance.
 ## Raw SQL Usage
 
 - Use raw SQL sparingly, only when LINQ translation is insufficient.
-- Parameterize values always; never concatenate untrusted inputs.
+- Parameterise values always; never concatenate untrusted inputs.
 - Keep SQL-localized logic covered by tests.
 
 ## Transaction and Consistency

@@ -23,11 +23,11 @@ The blog feature architecture consists of three main layers:
 - `/blog-posts` directory structure
 - Markdown files with YAML frontmatter metadata
 - `/blog-posts/images` subdirectory for featured images
-- Centralized content management
+- Centralised content management
 
 ## Prerequisites
 
-Before implementing the blog feature, ensure you have:
+Before implementing the blog feature, make sure you have:
 
 **Development Environment:**
 - .NET 10 SDK (or current version)

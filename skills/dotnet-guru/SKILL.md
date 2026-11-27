@@ -3,7 +3,7 @@ name: dotnet-guru
 description: Enforces current C# and .NET 10 best practices when writing, reviewing, or refactoring .NET code. Use when the user asks for C#/.NET help, ASP.NET Core APIs, Entity Framework Core, performance tuning, testing, security hardening, or project setup. Covers analyzers and SDK tooling, nullable/reference safety, async and allocation-aware patterns, DI/options correctness, observability, and anti-pattern elimination. Do NOT use for non-.NET languages or generic architecture discussions without concrete .NET implementation details.
 license: Apache-2.0
 metadata:
-  version: "1.0.0"
+  version: "1.1.0"
 ---
 
 # Dotnet Guru
@@ -12,6 +12,10 @@ Enforce modern, production-grade C# and .NET practices on every task.
 Default to the latest stable SDK available in the repository, and prefer current
 LTS for new projects. Never suggest legacy patterns when a modern built-in .NET
 approach exists.
+
+On 26/11/2026 the current LTS is .NET 10 (supported to November 2028). .NET 11 shipped on
+10/11/2026 as a standard-term release with the same end date; use it when the repository
+already targets it or the user wants C# 15 features, and say that it is STS.
 
 ## Critical
 
@@ -104,7 +108,7 @@ Run this checklist for **every** C#/.NET answer.
 - [ ] Parameterise SQL and avoid unsafe deserialisation patterns
 
 ### Testing
-- [ ] Unit tests are deterministic and isolated (`xUnit` + `FluentAssertions` optional)
+- [ ] Unit tests are deterministic and isolated (`xUnit` v3; an assertion library is optional)
 - [ ] Integration tests use realistic hosts (`WebApplicationFactory`, Testcontainers)
 - [ ] Use `Theory` for data-driven tests instead of logic-heavy test bodies
 - [ ] Include cancellation/error-path tests for async methods
@@ -150,14 +154,16 @@ my-dotnet-app/
 └── global.json
 ```
 
-Recommended setup commands:
+Recommended setup commands. FluentAssertions needs a paid licence for commercial use from v8
+onwards, so do not add it by default: use xUnit's own `Assert`, or Shouldly if the team wants
+fluent assertions.
 
 ```bash
 dotnet new webapi -n MyApp
 cd MyApp
-dotnet new xunit -n MyApp.UnitTests -o ../tests/MyApp.UnitTests
-dotnet new xunit -n MyApp.IntegrationTests -o ../tests/MyApp.IntegrationTests
-dotnet add ../tests/MyApp.UnitTests package FluentAssertions
+dotnet new install xunit.v3.templates
+dotnet new xunit3 -n MyApp.UnitTests -o ../tests/MyApp.UnitTests
+dotnet new xunit3 -n MyApp.IntegrationTests -o ../tests/MyApp.IntegrationTests
 dotnet add ../tests/MyApp.IntegrationTests package Microsoft.AspNetCore.Mvc.Testing
 dotnet add ../tests/MyApp.IntegrationTests package Testcontainers
 ```

@@ -150,7 +150,7 @@ var apiService = builder.AddProject<Projects.Api>("apiservice")
 builder.Build().Run();
 ```
 
-**Deployment behavior:**
+**Deployment behaviour:**
 - **Local development:** Uses containers (PostgreSQL, Redis, RabbitMQ)
 - **Azure deployment:** Provisions managed Azure services (Azure SQL, Azure Cache for Redis, Azure Service Bus)
 
@@ -440,7 +440,7 @@ http://<service-name>.<namespace>.svc.cluster.local
 builder.Services.AddHttpClient("apiservice", client =>
 {
     var serviceUrl = builder.Configuration["services:apiservice:http:0"]
-                     ?? "http://apiservice";
+                     ?? "https+http://apiservice";
     client.BaseAddress = new Uri(serviceUrl);
 });
 ```
@@ -554,7 +554,7 @@ builder.Logging.AddJsonConsole();
 
 **Azure Container Apps:** Logs automatically flow to Log Analytics
 
-**Kubernetes:** Use Fluentd/Fluent Bit to ship logs to centralized storage
+**Kubernetes:** Use Fluentd/Fluent Bit to ship logs to centralised storage
 
 ---
 
@@ -690,26 +690,26 @@ steps:
 ### Service Not Starting
 - Check container logs: `kubectl logs <pod>` or Azure Portal
 - Verify environment variables and connection strings
-- Ensure container has proper resource limits
+- Make sure container has proper resource limits
 - Check health check endpoints
 
 ### Service Discovery Failing
 - Verify service names match between AppHost and deployment
 - Check DNS resolution: `nslookup <service-name>`
-- Ensure network policies allow communication
+- Make sure network policies allow communication
 - Review service mesh configuration if applicable
 
 ### Performance Issues
 - Enable Application Insights or OpenTelemetry
-- Review resource utilization (CPU, memory)
+- Review resource utilisation (CPU, memory)
 - Check database connection pooling
-- Analyze distributed traces for bottlenecks
+- Analyse distributed traces for bottlenecks
 - Consider horizontal scaling
 
 ### Database Connection Failures
 - Verify connection strings
 - Check firewall rules
-- Ensure managed identity permissions (Azure)
+- Make sure managed identity permissions (Azure)
 - Review network security groups
 - Test connection from container: `kubectl exec -it <pod> -- /bin/bash`
 

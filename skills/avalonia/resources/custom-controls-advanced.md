@@ -1,6 +1,6 @@
 # Custom Controls and Advanced Techniques
 
-Building custom controls, advanced layouts, and optimization patterns for complex Avalonia applications.
+Building custom controls, advanced layouts, and optimisation patterns for complex Avalonia applications.
 
 ## Custom Controls
 
@@ -219,7 +219,7 @@ public class VirtualizingStackPanel : VirtualizingPanel
 }
 ```
 
-## Performance Optimization
+## Performance Optimisation
 
 ### Compiled Bindings
 
@@ -311,7 +311,7 @@ public class LazyLoadViewModel : ReactiveObject
 </ScrollViewer>
 ```
 
-### Image Optimization
+### Image Optimisation
 
 ```xml
 <!-- Async image loading -->
@@ -582,10 +582,10 @@ public class RatingControlTests
 ## Best Practices
 
 1. **Follow MVVM** - Keep custom control logic separate from business logic
-2. **Use attached properties** - For control customization
+2. **Use attached properties** - For control customisation
 3. **Template-based controls** - Use TemplatedControl for complex controls
 4. **Virtualize large collections** - For performance
-5. **Minimize render overhead** - Cache renders when possible
+5. **Minimise render overhead** - Cache renders when possible
 6. **Use compiled bindings** - For better performance
 7. **Profile performance** - Use tools to identify bottlenecks
 8. **Test thoroughly** - Use Avalonia.Headless for UI testing

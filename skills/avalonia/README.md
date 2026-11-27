@@ -2,10 +2,10 @@
 
 # avalonia
 
-Expert guidance for developing cross-platform desktop applications with Avalonia UI framework. Use when building, debugging, or optimising Avalonia apps including MVVM architecture, XAML design, data binding, styling, theming, custom controls, and cross-platform deployment for Windows, macOS, Linux, iOS, Android, and WebAssembly.
+Guides cross-platform .NET UI work with Avalonia, covering MVVM and data binding, XAML layout and controls, styles and themes, custom controls, ReactiveUI or CommunityToolkit.Mvvm view models, performance with large lists, and packaging for Windows, macOS, Linux, iOS, Android and the browser. Use when building, debugging or upgrading an Avalonia app, when an .axaml file or an Avalonia package is in the project, or when asked to "port this WPF app to Avalonia", "fix this Avalonia binding" or "make this Avalonia list faster". Do NOT use for WPF, WinUI or MAUI apps that do not use Avalonia, for Blazor UI (use blazor-expert), or for general C# questions with no UI (use dotnet-guru).
 
 - **Entry point:** [SKILL.md](SKILL.md)
-- **Version:** 2.0
+- **Version:** 3.0.0
 - **Licence:** Apache-2.0, see [LICENSE](LICENSE)
 
 ## Install
@@ -34,4 +34,4 @@ Loaded on demand, not up front. SKILL.md routes to them.
 ## Part of a larger set
 
 One of the .NET skills (`claude-skills-dotnet`). See the [group's list](../../README.md),
-or every group in [claude-skills](https://github.com/markpitt/claude-skills).
+or every group in [claude-skills](https://markpitt.dev/claude-skills/).

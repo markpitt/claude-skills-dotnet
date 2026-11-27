@@ -1,6 +1,6 @@
 # Azure Repos - Version Control & Git
 
-Azure Repos provides Git and TFVC repository management with comprehensive pull request workflow, branch policies, and commit tracking.
+Azure Repos provides Git and TFVC repository management with full pull request workflow, branch policies, and commit tracking.
 
 ## Repositories - Management
 
@@ -349,7 +349,7 @@ GET /{organization}/{project}/_apis/git/repositories/{repositoryId}/pushes/{push
 1. Use clear repository naming conventions
 2. Implement appropriate branch policies
 3. Document repository purposes
-4. Organize repositories by team or project domain
+4. Organise repositories by team or project domain
 5. Regularly archive unused repositories
 6. Use read-only mirrors for sensitive code
 

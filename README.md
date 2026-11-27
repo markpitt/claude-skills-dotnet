@@ -9,7 +9,7 @@
 
 The .NET consultant's shelf. `azure-swa` sits here because `blazor-blog-feature` builds on it, and `azure-devops` because the people who use it are .NET shops. `dotnet-guru` belongs to the language-guru family as well; it lives here so this group has its anchor.
 
-This is one of seven skill groups. [claude-skills](https://github.com/markpitt/claude-skills) lists them all and
+This is one of seven skill groups. [claude-skills](https://markpitt.dev/claude-skills/) lists them all and
 holds the shared tooling: validation, packaging, the evaluation harness and the TUI.
 
 ## Skills
@@ -17,12 +17,12 @@ holds the shared tooling: validation, packaging, the evaluation harness and the 
 <!-- BEGIN GENERATED SKILL INDEX -->
 | Skill | Bundled files | What it does |
 |---|---|---|
-| [avalonia](skills/avalonia/SKILL.md) | 6 files | Expert guidance for developing cross-platform desktop applications with Avalonia UI framework. |
-| [azure-devops](skills/azure-devops/SKILL.md) | 7 files | Works with the Azure DevOps REST API across all services including Boards (work items, queries, backlogs)… |
-| [azure-swa](skills/azure-swa/SKILL.md) | 6 files | Expert guidance for Azure Static Web Apps including architecture, configuration, API integration with Azure… |
-| [blazor-blog-feature](skills/blazor-blog-feature/SKILL.md) | 5 files | Adds a complete blog feature to an existing Blazor WebAssembly Static Web App with Azure Functions backend… |
-| [blazor-expert](skills/blazor-expert/SKILL.md) | 6 files | Blazor development expertise covering Blazor Server, WebAssembly, and Hybrid apps. |
-| [dotnet-aspire](skills/dotnet-aspire/SKILL.md) | 6 files | Adds .NET Aspire cloud-native orchestration to existing .NET solutions. |
+| [avalonia](skills/avalonia/SKILL.md) | 6 files | Guides cross-platform .NET UI work with Avalonia, covering MVVM and data binding, XAML layout and controls… |
+| [azure-devops](skills/azure-devops/SKILL.md) | 7 files | Works with the Azure DevOps REST API and the az devops CLI across Boards (work items, WIQL queries, sprints)… |
+| [azure-swa](skills/azure-swa/SKILL.md) | 6 files | Builds, configures, deploys and troubleshoots Azure Static Web Apps, covering staticwebapp.config.json… |
+| [blazor-blog-feature](skills/blazor-blog-feature/SKILL.md) | 5 files | Adds a markdown blog to an existing Blazor WebAssembly app hosted on Azure Static Web Apps, with an Azure… |
+| [blazor-expert](skills/blazor-expert/SKILL.md) | 6 files | Guides Blazor development across Blazor Web Apps and their render modes (static SSR, Interactive Server… |
+| [dotnet-aspire](skills/dotnet-aspire/SKILL.md) | 6 files | Adds Aspire (formerly .NET Aspire) orchestration to an existing .NET solution or starts a new one. |
 | [dotnet-github-packages-release](skills/dotnet-github-packages-release/SKILL.md) | 7 files | Publishes .NET NuGet packages to a GitHub Packages organisation feed, lets the organisation's other… |
 | [dotnet-guru](skills/dotnet-guru/SKILL.md) | 9 files | Enforces current C# and .NET 10 best practices when writing, reviewing, or refactoring .NET code. |
 

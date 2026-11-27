@@ -1,6 +1,6 @@
 # Blazor Performance & Advanced Patterns
 
-## Rendering Optimization
+## Rendering Optimisation
 
 ### ShouldRender Override
 
@@ -201,7 +201,7 @@ Virtualize large lists to render only visible items.
 ```
 
 **Parameters:**
-- `Items` - Static list of items to virtualize
+- `Items` - Static list of items to virtualise
 - `ItemsProvider` - Async method to load items on demand
 - `OverscanCount` - Extra items to render outside viewport (default 3)
 - `ItemSize` - Estimated height for scrollbar calculation
@@ -444,7 +444,7 @@ builder.Services.AddResponseCompression(opts =>
 });
 ```
 
-### Minimize JavaScript Interop
+### Minimise JavaScript Interop
 
 ```csharp
 // INEFFICIENT - Many JS calls
@@ -521,8 +521,8 @@ h1 {
 ### Performance
 - Use `@key` on list items
 - Override `ShouldRender()` to prevent unnecessary renders
-- Use virtualization for large lists
-- Minimize JavaScript interop calls
+- Use virtualisation for large lists
+- Minimise JavaScript interop calls
 - Enable AOT compilation and trimming for WASM
 
 ### JavaScript Interop
@@ -530,14 +530,14 @@ h1 {
 - Always dispose JS module references
 - Handle JS exceptions properly
 - Only call JS in `OnAfterRender` with firstRender check
-- Minimize interop calls for performance
+- Minimise interop calls for performance
 
 ### Architecture
 - Keep components simple and focused
 - Move logic to services
 - Use cascading values for shared state
 - Implement IDisposable for cleanup
-- Validate authorization on server side
+- Validate authorisation on server side
 
 ### User Experience
 - Show loading states during async operations

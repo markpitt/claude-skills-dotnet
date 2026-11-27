@@ -2,10 +2,10 @@
 
 # azure-devops
 
-Works with the Azure DevOps REST API across all services including Boards (work items, queries, backlogs), Repos (Git, pull requests, commits), Pipelines (builds, releases, deployments), Test Plans, Artifacts, organisations, projects, security, extensions, and more. Use when implementing Azure DevOps integrations, automating DevOps workflows, or building applications that interact with Azure DevOps services.
+Works with the Azure DevOps REST API and the az devops CLI across Boards (work items, WIQL queries, sprints), Repos (Git, pull requests, branch policies), Pipelines (builds, releases, agents, variables), Test Plans, Artifacts feeds, and organisation security. Use when writing code or scripts that call Azure DevOps, automating work items or pull requests, debugging a 401, 403 or 429 from dev.azure.com, or when asked to "create a work item from this", "query open bugs in Azure DevOps" or "trigger the pipeline from a script". Do NOT use for writing pipeline YAML with no API involved, for GitHub Actions or the GitHub API (use github-api), or for Azure resource management through ARM or the Azure CLI outside the devops extension.
 
 - **Entry point:** [SKILL.md](SKILL.md)
-- **Version:** 1.0
+- **Version:** 2.0.0
 - **Licence:** Apache-2.0, see [LICENSE](LICENSE)
 
 ## Install
@@ -35,4 +35,4 @@ Loaded on demand, not up front. SKILL.md routes to them.
 ## Part of a larger set
 
 One of the .NET skills (`claude-skills-dotnet`). See the [group's list](../../README.md),
-or every group in [claude-skills](https://github.com/markpitt/claude-skills).
+or every group in [claude-skills](https://markpitt.dev/claude-skills/).

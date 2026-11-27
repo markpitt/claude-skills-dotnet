@@ -1,13 +1,13 @@
 # Azure DevOps Organization & Security
 
-Covers organization and project management, user and group administration, security policies, identities, and access control.
+Covers organisation and project management, user and group administration, security policies, identities, and access control.
 
 ## Organizations & Projects
 
 Organization and project-level management.
 
 ### Organization Management
-Azure DevOps organizations are created through the Azure DevOps portal. Key endpoints:
+Azure DevOps organisations are created through the Azure DevOps portal. Key endpoints:
 
 ### List Projects
 ```http
@@ -73,7 +73,7 @@ DELETE /{organization}/_apis/projects/{projectId}?api-version=7.1
 
 ## Teams
 
-Organize users into teams within projects.
+Organise users into teams within projects.
 
 ### List Teams
 ```http
@@ -150,7 +150,7 @@ GET https://vssps.dev.azure.com/{organization}/_apis/graph/users?api-version=7.1
 GET https://vssps.dev.azure.com/{organization}/_apis/graph/users/{userDescriptor}?api-version=7.1-preview.1
 ```
 
-User descriptor format: `aad.{guid}` for Azure AD users
+User descriptor format: `aad.{guid}` for Microsoft Entra ID users
 
 ### Create User
 ```http
@@ -304,16 +304,16 @@ Content-Type: application/json
 ## Best Practices
 
 ### Organization Management
-1. Plan organization structure ahead
+1. Plan organisation structure ahead
 2. Use clear naming conventions
 3. Document project purposes
 4. Implement consistent processes
 5. Archive old projects
-6. Monitor organization growth
+6. Monitor organisation growth
 7. Plan capacity
 
 ### Team Organization
-1. Organize teams by function
+1. Organise teams by function
 2. Keep teams reasonably sized (3-9 people)
 3. Assign clear team leads
 4. Document team responsibilities
@@ -322,7 +322,7 @@ Content-Type: application/json
 7. Support team autonomy
 
 ### User Management
-1. Use Azure AD for authentication
+1. Use Microsoft Entra ID for authentication
 2. Keep users current
 3. Remove inactive users
 4. Enforce strong passwords

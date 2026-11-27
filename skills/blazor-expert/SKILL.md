@@ -1,262 +1,78 @@
 ---
 name: blazor-expert
-description: Blazor development expertise covering Blazor Server, WebAssembly, and Hybrid apps. Use when building Blazor components, implementing state management, handling routing, JavaScript interop, forms and validation, authentication, or optimising Blazor applications. Includes best practices, architecture patterns, and troubleshooting guidance.
+description: Guides Blazor development across Blazor Web Apps and their render modes (static SSR, Interactive Server, WebAssembly and Auto), standalone WebAssembly and Hybrid apps. Use when building Blazor components, choosing a render mode, implementing state management, handling routing, JavaScript interop, forms and validation, authentication, or speeding up a slow Blazor app. Do NOT use for a Blazor blog built on Azure Static Web Apps (use blazor-blog-feature), for Avalonia or MAUI UI without Blazor, or for general .NET questions with no Blazor component (use dotnet-guru).
 license: Apache-2.0
 metadata:
-  version: "2.0"
+  version: "3.0.0"
 ---
 
-# Blazor Expert - Orchestration Hub
+# Blazor
 
-Expert-level guidance for developing applications with Blazor, Microsoft's framework for building interactive web UIs using C# instead of JavaScript.
+Blazor builds web UI from Razor components written in C#. Since .NET 8 the starting point is the
+Blazor Web App, where each component chooses where it runs. Most confusion in a new app comes from
+that choice, so settle it first.
 
-## Quick Reference: When to Load Which Resource
+## Render modes (.NET 8 and later)
 
-| Task | Load Resource | Key Topics |
-|------|---------------|-----------|
-| **Build components, handle lifecycle events** | [components-lifecycle.md](resources/components-lifecycle.md) | Component structure, lifecycle methods, parameters, cascading values, RenderFragment composition |
-| **Manage component state, handle events** | [state-management-events.md](resources/state-management-events.md) | Local state, EventCallback, data binding, cascading state, service-based state |
-| **Configure routes, navigate between pages** | [routing-navigation.md](resources/routing-navigation.md) | Route parameters, constraints, navigation, NavLink, query strings, layouts |
-| **Build forms, validate user input** | [forms-validation.md](resources/forms-validation.md) | EditForm, input components, DataAnnotations validation, custom validators |
-| **Setup authentication & authorisation** | [authentication-authorization.md](resources/authentication-authorization.md) | Auth setup, AuthorizeView, Authorise attribute, policies, claims |
-| **Optimise performance, use JavaScript interop** | [performance-advanced.md](resources/performance-advanced.md) | Rendering optimisation, virtualisation, JS interop, lazy loading, WASM best practices |
+New projects start from the Blazor Web App template, not the separate Server and WebAssembly
+templates. The hosting choice is made per component through its render mode:
 
-## Orchestration Protocol
+| Render mode | Where it runs | Interactive | Use for |
+|---|---|---|---|
+| Static SSR (the default) | Server, HTML only | No | Content pages, forms posted with enhanced form handling |
+| `InteractiveServer` | Server, over SignalR | Yes | Line-of-business UI next to the data |
+| `InteractiveWebAssembly` | Browser | Yes | Offline-capable or client-heavy components |
+| `InteractiveAuto` | Server first, then WebAssembly once downloaded | Yes | Fast first load with a client-side steady state |
 
-### Phase 1: Task Analysis
+- Set a mode on one component with `@rendermode InteractiveServer`, or for the whole app on
+  `<Routes>` and `<HeadOutlet>` in `App.razor`.
+- With no render mode, a component is static: `@onclick` handlers do nothing. This is the most
+  common "my button does not work" cause in a new app.
+- Prerendering is on by default for interactive modes, so `OnInitializedAsync` runs twice. Guard
+  expensive calls or persist state across the prerender.
+- `[StreamRendering]` sends the page shell first and fills it in as async work completes.
+- A WebAssembly or Auto component lives in the `.Client` project and cannot reach server-only
+  services directly. Give it an interface with a server implementation and an HTTP one.
 
-Identify your primary objective:
-- **UI Building** → Load components-lifecycle.md
-- **State Handling** → Load state-management-events.md
-- **Navigation** → Load routing-navigation.md
-- **Data Input** → Load forms-validation.md
-- **User Access** → Load authentication-authorization.md
-- **Speed/Efficiency** → Load performance-advanced.md
+Standalone WebAssembly (no server, for static hosting) and Blazor Hybrid (components inside MAUI,
+WPF or WinForms through a `BlazorWebView`) are still supported and use the same component model.
 
-### Phase 2: Resource Loading
+## Which reference to load
 
-Open the recommended resource file(s) and search for your specific need using Ctrl+F. Each resource is organised by topic with working code examples.
+| Task | Reference |
+|---|---|
+| Component structure, lifecycle, parameters, cascading values, `RenderFragment` | `resources/components-lifecycle.md` |
+| Local and shared state, `EventCallback`, binding, service-based state | `resources/state-management-events.md` |
+| Routes, constraints, `NavigationManager`, query strings, layouts | `resources/routing-navigation.md` |
+| `EditForm`, input components, DataAnnotations and custom validation | `resources/forms-validation.md` |
+| Auth setup, `AuthorizeView`, `[Authorize]`, policies, claims | `resources/authentication-authorization.md` |
+| Rendering cost, `Virtualize`, JS interop, lazy loading, AOT and trimming | `resources/performance-advanced.md` |
 
-### Phase 3: Implementation & Validation
+## Traps
 
-- Follow code patterns from the resource
-- Adapt to your specific requirements
-- Test in appropriate hosting model (Server/WASM/Hybrid)
-- Review troubleshooting section if issues arise
+- **The component does not re-render.** A mutated list or object keeps the same reference, and an
+  event from outside Blazor (a timer, a service event) does not trigger a render. Reassign, or call
+  `InvokeAsync(StateHasChanged)` from the non-UI callback.
+- **A child's parameter stops updating.** A child that copies a parameter into a field on
+  `OnInitialized` never sees the next value. Read it in `OnParametersSet`, or use it directly.
+- **JS interop throws on load.** The DOM does not exist during prerendering. Call JS in
+  `OnAfterRenderAsync` when `firstRender` is true, and load scripts as modules with
+  `IJSRuntime.InvokeAsync<IJSObjectReference>("import", "./script.js")`.
+- **Long lists are slow.** Use `<Virtualize>` once a list reaches a few hundred rows, and set `@key`
+  on items in any list that reorders.
+- **Leaks in Server mode.** Each user holds a circuit on the server. Unsubscribe from service
+  events and dispose timers in `Dispose`, or every visit leaves an object behind.
+- **Authorisation only in the UI.** `AuthorizeView` and `[Authorize]` decide what renders. They do
+  not protect an API or a service method. Check again on the server.
+- **Lost connection in Server mode.** Provide reconnection UI, and expect circuit state to be lost
+  after `DisconnectedCircuitRetentionPeriod`. Anything the user cannot afford to lose belongs in
+  storage, not the circuit.
 
-## Blazor Hosting Models Overview
+## Defaults worth keeping
 
-### Blazor Server
-- **How**: Runs on server via SignalR
-- **Best For**: Line-of-business apps, need full .NET runtime, small download size
-- **Trade-offs**: High latency, requires connection, server resource intensive
-
-### Blazor WebAssembly
-- **How**: Runs in browser via WebAssembly
-- **Best For**: PWAs, offline apps, no server dependency, client-heavy applications
-- **Trade-offs**: Large initial download, limited .NET APIs, slower cold start
-
-### Blazor Hybrid
-- **How**: Runs in MAUI/WPF/WinForms with Blazor UI
-- **Best For**: Cross-platform desktop/mobile apps
-- **Trade-offs**: Platform-specific considerations, additional dependencies
-
-**Decision**: Choose based on deployment environment, offline requirements, and server constraints.
-
-## Common Implementation Workflows
-
-### Scenario 1: Build a Data-Entry Component
-
-1. Read [components-lifecycle.md](resources/components-lifecycle.md) - Component structure section
-2. Read [state-management-events.md](resources/state-management-events.md) - EventCallback pattern
-3. Read [forms-validation.md](resources/forms-validation.md) - EditForm component
-4. Combine: Create component with parameters → capture user input → validate → notify parent
-
-### Scenario 2: Implement User Authentication & Protected Pages
-
-1. Read [authentication-authorization.md](resources/authentication-authorization.md) - Setup section
-2. Read [routing-navigation.md](resources/routing-navigation.md) - Layouts section
-3. Read [authentication-authorization.md](resources/authentication-authorization.md) - AuthorizeView section
-4. Combine: Configure auth → create login page → protect routes → check auth in components
-
-### Scenario 3: Build Interactive List with Search/Filter
-
-1. Read [routing-navigation.md](resources/routing-navigation.md) - Query strings section
-2. Read [state-management-events.md](resources/state-management-events.md) - Data binding section
-3. Read [performance-advanced.md](resources/performance-advanced.md) - Virtualisation section
-4. Combine: Capture search input → update URL query → fetch filtered data → virtualise if large
-
-### Scenario 4: Optimise Performance of Existing App
-
-1. Read [performance-advanced.md](resources/performance-advanced.md) - All sections
-2. Identify bottlenecks:
-   - Unnecessary renders? → ShouldRender override, @key directive
-   - Large lists? → Virtualisation
-   - JS latency? → Module isolation pattern
-3. Apply targeted optimisations from resource
-
-## Key Blazor Concepts
-
-### Component Architecture
-- **Components**: Self-contained UI units with optional logic
-- **Parameters**: Inputs to components, enable reusability
-- **Cascading Values**: Share state with descendants without explicit parameters
-- **Events**: Child-to-parent communication via EventCallback
-- **Layouts**: Parent wrapper for consistent page structure
-
-### State Management
-- **Local State**: Component-specific fields and properties
-- **Cascading Values**: Share state to descendants
-- **Services**: Application-wide state via dependency injection
-- **Event Binding**: React to user interactions
-- **Data Binding**: Two-way synchronisation with UI
-
-### Routing & Navigation
-- **@page Directive**: Make component routable
-- **Route Parameters**: Pass data via URL (`{id:int}`)
-- **Navigation**: Programmatic navigation via NavigationManager
-- **NavLink**: UI component that highlights active route
-- **Layouts**: Wrap pages with common structure
-
-### Forms & Validation
-- **EditForm**: Form component with validation support
-- **Input Components**: Typed controls (InputText, InputNumber, etc.)
-- **Validators**: DataAnnotations attributes or custom logic
-- **EventCallback**: Notify parent of form changes
-- **Messages**: Display validation errors to user
-
-### Authentication & Authorisation
-- **Claims & Roles**: Identify users and define access levels
-- **Policies**: Fine-grained authorisation rules
-- **Authorize Attribute**: Protect pages from unauthorized access
-- **AuthorizeView**: Conditional rendering based on permissions
-- **AuthenticationStateProvider**: Get current user information
-
-### Performance Optimisation
-- **ShouldRender()**: Prevent unnecessary re-renders
-- **@key Directive**: Help diffing algorithm match list items
-- **Virtualisation**: Render only visible items in large lists
-- **JS Interop**: Call JavaScript from C# and vice versa
-- **AOT/Trimming**: Reduce WASM download size (production)
-
-## Best Practices Highlights
-
-### Component Design
-✅ **Single Responsibility** - Each component has one clear purpose
-✅ **Composition** - Use RenderFragments for flexible layouts
-✅ **Parameter Clarity** - Use descriptive names, mark required with `[EditorRequired]`
-✅ **Proper Disposal** - Implement `IDisposable` to clean up resources
-✅ **Event-Based Communication** - Use `EventCallback` for child-to-parent updates
-
-### State Management
-✅ **EventCallback Over Action** - Proper async handling
-✅ **Immutable Updates** - Create new objects/collections, don't mutate
-✅ **Service-Based State** - Use scoped services for shared state
-✅ **Unsubscribe from Events** - Prevent memory leaks in Dispose
-✅ **InvokeAsync for Background Threads** - Thread-safe state updates
-
-### Routing & Navigation
-✅ **Route Constraints** - Use `:int`, `:guid`, etc. to validate formats
-✅ **NavLink Component** - Automatic active state highlighting
-✅ **forceLoad After Logout** - Clear client-side state
-✅ **ReturnUrl Pattern** - Redirect back after login
-✅ **Query Strings** - Preserve filters/pagination across navigation
-
-### Forms & Validation
-✅ **EditForm + DataAnnotationsValidator** - Built-in validation
-✅ **ValidationMessage** - Show field-level errors
-✅ **Custom Validators** - Extend for complex rules
-✅ **Async Validation** - Check server availability before submit
-✅ **Loading State** - Disable submit button while processing
-
-### Authentication & Authorisation
-✅ **Server Validation** - Never trust client-side checks alone
-✅ **Policies Over Roles** - More flexible authorisation rules
-✅ **Claims for Details** - Store user attributes in claims
-✅ **Cascading AuthenticationState** - Available in all components
-✅ **Error Boundaries** - Graceful error handling
-
-### Performance
-✅ **@key on Lists** - Optimise item matching
-✅ **ShouldRender Override** - Prevent unnecessary renders
-✅ **Virtualisation for Large Lists** - Only render visible items
-✅ **JS Module Isolation** - Load and cache JS modules efficiently
-✅ **AOT for WASM** - Production deployments
-
-## Common Troubleshooting
-
-### Component Not Re-rendering
-- **Cause**: Mutation instead of reassignment
-- **Fix**: Create new object/collection: `items = items.Append(item).ToList()`
-- **Or**: Call `StateHasChanged()` manually
-
-### Parameter Not Updating
-- **Cause**: Parent not re-rendering or same object reference
-- **Fix**: Parent must re-render, ensure new reference for objects
-- **Debug**: Check OnParametersSet is firing
-
-### JS Interop Errors
-- **Cause**: Called before script loaded or wrong function name
-- **Fix**: Use `firstRender` check, verify JS file path
-- **Pattern**: Use module isolation: `await JS.InvokeAsync("import", "./script.js")`
-
-### Authentication State Not Available
-- **Cause**: Cascading parameter not provided or timing issue
-- **Fix**: Ensure AuthenticationStateProvider configured
-- **Pattern**: Always null-check and use `await AuthStateTask!` in code block
-
-### Large List Performance Issues
-- **Cause**: Rendering all items in DOM
-- **Fix**: Use Virtualise component for 1000+ items
-- **Alternative**: Paginate with buttons/infinite scroll
-
-### Blazor Server Connection Issues
-- **Cause**: SignalR connection dropped or configuration issue
-- **Fix**: Implement reconnection UI, increase timeout
-- **Config**: Adjust `CircuitOptions.DisconnectedCircuitRetentionPeriod`
-
-## Resource Files Summary
-
-### components-lifecycle.md
-Complete guide to component structure, lifecycle methods, parameters, cascading values, and composition patterns. Essential for understanding Blazor component fundamentals.
-
-### state-management-events.md
-Covers local and service-based state, event handling with EventCallback, data binding patterns, and component communication. Core for interactive UI building.
-
-### routing-navigation.md
-Complete routing reference including route parameters, constraints, programmatic navigation, query strings, and layout management. Essential for multi-page apps.
-
-### forms-validation.md
-Full forms API with EditForm component, input controls, DataAnnotations validation, custom validators, and form patterns. Required for data entry scenarios.
-
-### authentication-authorization.md
-Complete auth setup for Server and WASM, AuthorizeView, policies, claims-based access control, and login/logout patterns. Necessary for secured applications.
-
-### performance-advanced.md
-Performance optimisation techniques including ShouldRender, virtualisation, JavaScript interop patterns, lazy loading, and WASM best practices. Vital for production apps.
-
----
-
-## Implementation Approach
-
-When implementing Blazor features:
-
-1. **Identify Your Task** - Match against the decision table above
-2. **Load Relevant Resource** - Read the appropriate .md file
-3. **Find Code Example** - Search resource for similar implementation
-4. **Adapt to Your Context** - Modify for your specific requirements
-5. **Test Thoroughly** - Verify in your hosting model
-6. **Reference Troubleshooting** - Consult resource if issues arise
-
-## Next Steps
-
-- **New to Blazor?** Start with [components-lifecycle.md](resources/components-lifecycle.md)
-- **Building Data App?** Move through: components → state → forms → validation
-- **Scaling Existing App?** Focus on [performance-advanced.md](resources/performance-advanced.md)
-- **Adding Security?** Follow [authentication-authorization.md](resources/authentication-authorization.md)
-
----
-
-**Version**: 2.0 - Modular Orchestration Pattern  
-**Last Updated**: December 4, 2025  
-**Status**: Production Ready ✅
+Prefer `EventCallback` over `Action` for child-to-parent events: it awaits the handler and renders
+the parent afterwards. Mark required parameters with `[EditorRequired]`. Use scoped services for
+state shared across a page or user, and remember that "scoped" means per circuit in Server mode
+and per tab in WebAssembly. For WebAssembly in production, turn on trimming and consider AOT for
+CPU-heavy code; both are in `resources/performance-advanced.md`, which is worth reading before a
+production release.

@@ -2,10 +2,10 @@
 
 # azure-swa
 
-Expert guidance for Azure Static Web Apps including architecture, configuration, API integration with Azure Functions, authentication, routing, deployment, and CI/CD. Use when building, configuring, deploying, or troubleshooting Azure Static Web Apps projects with frameworks like React, Angular, Vue, Blazor, or vanilla JavaScript.
+Builds, configures, deploys and troubleshoots Azure Static Web Apps, covering staticwebapp.config.json routing and fallback, built-in authentication and roles, managed or linked Azure Functions APIs, the SWA CLI for local development, GitHub Actions and Azure DevOps deployment, preview environments and custom domains. Works with React, Angular, Vue, Blazor WebAssembly and plain static sites. Use when a project has a staticwebapp.config.json or an Azure/static-web-apps-deploy workflow, or when asked to "deploy this to Static Web Apps", "fix the 404 on refresh" or "lock this route to admins". Do NOT use for Azure App Service, Container Apps or a server-rendered Blazor app (use blazor-expert), or for general Azure Functions work with no Static Web App in front of it.
 
 - **Entry point:** [SKILL.md](SKILL.md)
-- **Version:** 2.1
+- **Version:** 3.0.0
 - **Licence:** Apache-2.0, see [LICENSE](LICENSE)
 
 ## Install
@@ -34,4 +34,4 @@ Loaded on demand, not up front. SKILL.md routes to them.
 ## Part of a larger set
 
 One of the .NET skills (`claude-skills-dotnet`). See the [group's list](../../README.md),
-or every group in [claude-skills](https://github.com/markpitt/claude-skills).
+or every group in [claude-skills](https://markpitt.dev/claude-skills/).

@@ -51,7 +51,7 @@ The name parameter ("api", "web") becomes the service discovery identifier.
 // Program.cs in the service that calls another service
 builder.Services.AddHttpClient("api", client =>
 {
-    client.BaseAddress = new Uri("http://api");
+    client.BaseAddress = new Uri("https+http://api");
 });
 ```
 
@@ -119,7 +119,7 @@ public class ProductApiClient : IProductApiClient
 ```csharp
 builder.Services.AddHttpClient<IProductApiClient, ProductApiClient>(client =>
 {
-    client.BaseAddress = new Uri("http://api");
+    client.BaseAddress = new Uri("https+http://api");
     client.DefaultRequestHeaders.Add("Accept", "application/json");
 });
 ```
@@ -160,7 +160,7 @@ ServiceDefaults automatically includes resilience policies via `Microsoft.Extens
 ```csharp
 builder.Services.AddHttpClient<IProductApiClient, ProductApiClient>(client =>
 {
-    client.BaseAddress = new Uri("http://api");
+    client.BaseAddress = new Uri("https+http://api");
 })
 .AddStandardResilienceHandler(options =>
 {
@@ -299,7 +299,7 @@ public class OrderGrpcClient : IOrderGrpcClient
 ```csharp
 builder.Services.AddGrpcClient<OrderService.OrderServiceClient>(client =>
 {
-    client.Address = new Uri("http://orders");  // Service name from AppHost
+    client.Address = new Uri("https+http://orders");  // Service name from AppHost
 });
 
 builder.Services.AddScoped<IOrderGrpcClient, OrderGrpcClient>();
@@ -351,7 +351,7 @@ var web = builder.AddProject<Projects.Web>("web")
 ```csharp
 builder.Services.AddHttpClient<IProductApiClient, ProductApiClient>(client =>
 {
-    client.BaseAddress = new Uri("http://api");
+    client.BaseAddress = new Uri("https+http://api");
 })
 .ConfigureHttpClient((serviceProvider, client) =>
 {
@@ -377,7 +377,7 @@ var api = builder.AddProject<Projects.Api>("api")
 ```csharp
 builder.Services.AddHttpClient<IProductApiClient, ProductApiClient>(client =>
 {
-    client.BaseAddress = new Uri("http://api");
+    client.BaseAddress = new Uri("https+http://api");
 })
 .ConfigureHttpClient((serviceProvider, client) =>
 {
@@ -427,7 +427,7 @@ Already included in ServiceDefaults via resilience policies:
 ```csharp
 builder.Services.AddHttpClient<IProductApiClient, ProductApiClient>(client =>
 {
-    client.BaseAddress = new Uri("http://api");
+    client.BaseAddress = new Uri("https+http://api");
 })
 .AddStandardResilienceHandler(options =>
 {
@@ -439,7 +439,7 @@ builder.Services.AddHttpClient<IProductApiClient, ProductApiClient>(client =>
 
 ### Retry with Exponential Backoff
 
-Configured by default, customize as needed:
+Configured by default, customise as needed:
 
 ```csharp
 .AddStandardResilienceHandler(options =>
@@ -531,7 +531,7 @@ View in Prometheus dashboard (if configured in AppHost).
 1. Verify service name matches AppHost definition
 2. Check service is running in dashboard
 3. Confirm ServiceDefaults is referenced and AddServiceDefaults() called
-4. Ensure MapDefaultEndpoints() called in ASP.NET services
+4. Make sure MapDefaultEndpoints() called in ASP.NET services
 
 ### Timeout Issues
 

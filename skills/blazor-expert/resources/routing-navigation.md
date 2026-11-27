@@ -152,7 +152,7 @@ Navigation.NavigateTo("/new-page", replace: true, forceLoad: true);
 - After logout to clear client-side state
 - Accessing completely different app
 - Clearing service worker cache
-- Full server-side initialization needed
+- Full server-side initialisation needed
 
 ### NavLink Component
 

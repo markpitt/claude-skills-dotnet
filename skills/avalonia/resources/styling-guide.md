@@ -533,20 +533,20 @@ Application.Current.RequestedThemeVariant = ThemeVariant.Default;
 ## Performance Tips
 
 1. **Use Static Resources**: Prefer `StaticResource` over `DynamicResource` when values won't change
-2. **Minimize Template Complexity**: Keep control templates simple to reduce render time
+2. **Minimise Template Complexity**: Keep control templates simple to reduce render time
 3. **Use Transitions Sparingly**: Too many animations can impact performance
 4. **Cache Brushes**: Define brushes as resources instead of inline
 5. **Avoid Deep Nesting**: Flatten selector hierarchies when possible
 
 ## Best Practices
 
-1. **Organize Styles**: Separate styles into logical files (Colors, Buttons, etc.)
+1. **Organise Styles**: Separate styles into logical files (Colors, Buttons, etc.)
 2. **Use Naming Conventions**: Consistent naming for resources and classes
 3. **Document Custom Styles**: Comment complex selectors and templates
-4. **Test Theme Variants**: Ensure styles work in both light and dark themes
+4. **Test Theme Variants**: Make sure styles work in both light and dark themes
 5. **Follow Platform Guidelines**: Match native look and feel when appropriate
 6. **Use Class Modifiers**: Prefer classes over direct styling for reusability
-7. **Leverage Inheritance**: Use base styles and extend them
+7. **Use Inheritance**: Use base styles and extend them
 8. **Keep It DRY**: Extract common patterns into reusable styles
 
 This guide provides a foundation for advanced styling in Avalonia. Experiment with these patterns and adapt them to your application's design requirements.
